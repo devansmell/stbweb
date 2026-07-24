@@ -126,9 +126,9 @@ function isDropDay(dateStr) {
 const galleryImages = [
   { file: "gallery-1.jpg", photographer: "Dean Naylor", url: "https://instagram.com/deannaylorr" },
   { file: "gallery-2.jpg", photographer: "Dean Naylor", url: "https://instagram.com/deannaylorr" },
-  { file: "gallery-3.jpg", photographer: "Photographer Name", url: "https://instagram.com/" },
+  { file: "gallery-3.jpg", photographer: "Ace (@tehya.jpeg)", url: "https://www.instagram.com/tehya.jpeg/" },
   { file: "gallery-4.jpg", photographer: "Aimee King", url: "https://www.instagram.com/aimeedotmusic/" },
-  { file: "gallery-5.jpg", photographer: "Photographer Name", url: "https://instagram.com/" },
+  { file: "gallery-5.jpg", photographer: "Kamile (@withacinnamongirl)", url: "https://www.instagram.com/withacinnamongirl/" },
   { file: "gallery-6.jpg", photographer: "Dean Naylor", url: "https://instagram.com/deannaylorr" },
   { file: "gallery-7.jpg", photographer: "Dean Naylor", url: "https://instagram.com/deannaylorr" },
   { file: "gallery-8.jpg", photographer: "Ace (@tehya.jpeg)", url: "https://www.instagram.com/tehya.jpeg/" },
