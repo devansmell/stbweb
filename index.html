@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ============================= SEO / META ============================= -->
+    <title>Split The Bill</title>
+    <meta
+      name="description"
+      content="Split The Bill is a live music event celebrating Galway's local music scene — documenting live performances and supporting young local artists."
+    />
+    <meta name="theme-color" content="#121212" />
+    <meta name="author" content="Split The Bill" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Split The Bill" />
+    <meta
+      property="og:description"
+      content="Celebrating Galway's Local Music Scene"
+    />
+    <meta property="og:type" content="website" />
+
+    <!-- ============================= FAVICONS ============================= -->
+    <!-- need to add into /assets/favicon/ -->
+    <link rel="icon" href="assets/favicon/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png" />
+
+    <!-- ============================= FONTS ============================= -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ============================= STYLES ============================= -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- ============================================================= -->
+    <!-- INTRO ANIMATION (shown once per browser session)              -->
+    <!-- ============================================================= -->
+    <div id="intro" class="intro" aria-hidden="true">
+      <div class="intro__logo">
+        <img src="assets/stb-logo.svg" alt="Split The Bill" class="intro__img" />
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- PERSISTENT BACKGROUND LAYER (maybe crossfading event photos when I get around to it) -->
+    <!-- ============================================================= -->
+    <div class="bg-layer" aria-hidden="true">
+      <div class="bg-layer__stack" id="bgStack"></div>
+      <div class="bg-layer__overlay"></div>
+      <div class="bg-layer__grain"></div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- NAVIGATION                                                    -->
+    <!-- ============================================================= -->
+    <header class="nav" id="nav">
+      <a href="#home" class="nav__brand" aria-label="Split The Bill — home">
+        <img src="assets/stb-logo.svg" alt="Split The Bill" class="nav__logo" />
+      </a>
+
+      <nav class="nav__links" id="navLinks" aria-label="Primary">
+        <a href="#home" class="nav__link">Home</a>
+        <a href="#videos" class="nav__link">Videos</a>
+        <a href="#gallery" class="nav__link">Gallery</a>
+        <a href="#about" class="nav__link">About</a>
+      </nav>
+
+      <button
+        class="nav__toggle"
+        id="navToggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="navLinks"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <!-- ============================================================= -->
+    <!-- MAIN CONTENT                                                  -->
+    <!-- ============================================================= -->
+    <main class="main">
+      <!-- ---------------------- HERO ---------------------- -->
+      <section
+        id="home"
+        class="section hero"
+        data-bg="0"
+        data-section="Home"
+      >
+        <div class="hero__inner reveal">
+          <img src="assets/stb-logo.svg" alt="Split The Bill" class="hero__logo" />
+          <p class="hero__subtitle">Celebrating Galway's Local Music Scene</p>
+          <a href="#videos" class="btn btn--primary">Watch Performances</a>
+        </div>
+        <a href="#videos" class="hero__scroll" aria-label="Scroll to videos">
+          <span class="hero__scroll-dot"></span>
+        </a>
+      </section>
+
+      <!-- ---------------------- VIDEOS ---------------------- -->
+      <div id="videos"></div>
+
+      <!-- ---------------------- GALLERY ---------------------- -->
+      <section
+        id="gallery"
+        class="section gallery"
+        data-bg="venue"
+        data-section="Gallery"
+      >
+        <div class="section__head reveal">
+          <span class="eyebrow">Photographs</span>
+          <h2 class="section__title">Gallery</h2>
+          <p class="section__lead">
+            Moments from the night captured by our super talented media team :)
+          </p>
+        </div>
+        <div class="masonry" id="masonry"></div>
+      </section>
+
+      <!-- ---------------------- ABOUT ---------------------- -->
+      <section
+        id="about"
+        class="section about"
+        data-bg="1"
+        data-section="About"
+      >
+        <div class="about__inner reveal glass">
+          <span class="eyebrow">About</span>
+          <h2 class="section__title">Split The Bill</h2>
+          <p>
+            Split The Bill is a live music event dedicated to celebrating and
+            documenting Galway's local music scene.
+          </p>
+          <p>
+            Our focus is on supporting young local artists and giving emerging
+            bands a stage, while giving young people the space to freely
+			enjoy themselves without limits.
+          </p>
+          <p>
+            We do this while capturing every performance so the night lives
+            on beyond the room it happened in. This site is an evolving archive.
+			Every event adds another chapter.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <img src="assets/stb-logo.svg" alt="Split The Bill" class="footer__logo" />
+        <nav class="footer__social" aria-label="Social links">
+          <a href="https://instagram.com/splitthebillgig" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://www.youtube.com/channel/UCICzH7BlZFjABABPWOiTeUg" target="_blank" rel="noopener noreferrer">YouTube</a>
+          <a href="mailto:hi@splitthebillgig.com">Email</a>
+        </nav>
+        <p class="footer__copy">
+          &copy; <span id="year"></span> Split The Bill. All rights reserved.
+        </p>
+      </div>
+    </footer>
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+      <button class="lightbox__close" id="lightboxClose" aria-label="Close">&times;</button>
+      <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Previous image">&#8249;</button>
+      <figure class="lightbox__figure">
+        <img class="lightbox__img" id="lightboxImg" src="" alt="" />
+        <figcaption class="lightbox__caption" id="lightboxCaption">
+          <span class="lightbox__credit" id="lightboxCredit"></span>
+          <a class="lightbox__link" id="lightboxLink" href="#" target="_blank" rel="noopener noreferrer">View work &#8599;</a>
+        </figcaption>
+      </figure>
+      <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Next image">&#8250;</button>
+    </div>
+    <script src="script.js" defer></script>
+  </body>
+</html>

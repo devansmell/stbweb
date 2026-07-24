@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PLACEHOLDER LOGO — replace with your real Split The Bill SVG logo -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 120" role="img" aria-label="Split The Bill">
+  <style>
+    .stb-main { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; }
+    .stb-sub  { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 500; letter-spacing: 6px; }
+  </style>
+  <text x="0" y="58" class="stb-main" font-size="52" fill="#ffffff">SPLIT<tspan fill="#f04e98">/</tspan>THE</text>
+  <text x="0" y="104" class="stb-sub" font-size="46" fill="#f4a300">BILL</text>
+</svg>

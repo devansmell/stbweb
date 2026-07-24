@@ -1,0 +1,1117 @@
+/* =============================================================
+   SPLIT THE BILL — STYLES
+   A dark, minimal, archive-style aesthetic.
+   ============================================================= */
+
+/* ---------------------- LOCAL FONTS ---------------------- */
+/* Drop the free LEDLight font files into /assets/fonts/ using
+   these exact names (any of the three formats is enough — you
+   don't need all three, just delete the @font-face src lines
+   for formats you don't have). */
+@font-face {
+  font-family: "LEDLight";
+  src: url("assets/fonts/LEDLight.woff2") format("woff2"),
+    url("assets/fonts/LEDLight.woff") format("woff"),
+    url("assets/fonts/LEDLight.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------------------- DESIGN TOKENS ---------------------- */
+:root {
+  --bg: #0c0e0c;
+  --bg-soft: #161815;
+  --fg: #f2f2ec;
+  --fg-muted: rgba(242, 242, 236, 0.6);
+  --fg-faint: rgba(242, 242, 236, 0.36);
+  --gold: #f4a300;
+  --toxic: #b7ff4a;
+
+  --glass-bg: rgba(255, 255, 255, 0.035);
+  --glass-border: rgba(242, 242, 236, 0.22);
+
+  /* Flat, torn-poster corners — not app-rounded */
+  --radius-sm: 2px;
+  --radius: 2px;
+  --radius-lg: 3px;
+
+  --font-display: "Anton", "Space Grotesk", sans-serif;
+  --font-kicker: "DM Sans", sans-serif;
+  --font-mono: "DM Mono", "Space Grotesk", monospace;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --maxw: 1180px;
+}
+
+/* ---------------------- RESET ---------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+::selection {
+  background: var(--toxic);
+  color: #0c0e0c;
+}
+
+/* =============================================================
+   GRAIN — a fixed noise layer riding over EVERYTHING, so the
+   whole page reads like it was scanned off a xeroxed flyer,
+   not rendered in a browser.
+   ============================================================= */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -10%;
+  z-index: 999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  animation: grain 7s steps(5) infinite;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* =============================================================
+   INTRO ANIMATION
+   ============================================================= */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  transition: opacity 0.8s var(--ease-soft), visibility 0.8s var(--ease-soft);
+}
+
+.intro.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro__img {
+  width: min(320px, 60vw);
+  height: auto;
+  opacity: 0;
+  animation: introSequence 2s var(--ease) forwards;
+}
+
+@keyframes introSequence {
+  0% {
+    opacity: 0;
+    transform: scale(0.94);
+    filter: brightness(1);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(0.98);
+  }
+  /* glitch / flicker */
+  55% {
+    opacity: 0.4;
+    transform: scale(1) translateX(-3px);
+    filter: brightness(1.6);
+  }
+  58% {
+    opacity: 1;
+    transform: scale(1.01) translateX(2px);
+  }
+  62% {
+    opacity: 0.7;
+    transform: scale(1.01) translateX(-1px);
+  }
+  66% {
+    opacity: 1;
+    transform: scale(1.02) translateX(0);
+    filter: brightness(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+/* =============================================================
+   PERSISTENT BACKGROUND LAYER
+   ============================================================= */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: radial-gradient(
+      ellipse 55% 45% at 78% 12%,
+      rgba(183, 255, 74, 0.12),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 45% 40% at 15% 88%,
+      rgba(244, 163, 0, 0.09),
+      transparent 65%
+    ),
+    var(--bg);
+}
+
+.bg-layer__stack {
+  position: absolute;
+  inset: 0;
+}
+
+.bg-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 1.4s var(--ease-soft), transform 8s var(--ease-soft);
+  will-change: opacity, transform;
+}
+
+.bg-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Dark overlay keeps text readable */
+.bg-layer__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+      165deg,
+      rgba(10, 14, 10, 0.75) 0%,
+      rgba(12, 14, 12, 0.82) 45%,
+      rgba(8, 9, 8, 0.94) 100%
+    );
+}
+
+/* Subtle film grain */
+.bg-layer__grain {
+  position: absolute;
+  inset: -50%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.09;
+  animation: grain 8s steps(6) infinite;
+  pointer-events: none;
+}
+
+@keyframes grain {
+  0%,
+  100% { transform: translate(0, 0); }
+  20% { transform: translate(-4%, 3%); }
+  40% { transform: translate(3%, -2%); }
+  60% { transform: translate(-2%, 4%); }
+  80% { transform: translate(2%, -3%); }
+}
+
+/* =============================================================
+   NAVIGATION
+   ============================================================= */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px clamp(20px, 5vw, 48px);
+  transition: background 0.4s var(--ease-soft), backdrop-filter 0.4s,
+    padding 0.4s var(--ease-soft);
+}
+
+.nav.is-scrolled {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background: rgba(10, 12, 10, 0.88);
+  border-bottom: 2px solid var(--glass-border);
+}
+
+  .nav__logo {
+  height: clamp(20px, 5.5vw, 22px);
+  width: auto;
+  max-width: 62vw;
+  object-fit: contain;
+  object-position: left center;
+  }
+
+.nav__links {
+  display: flex;
+  gap: 22px;
+}
+
+.nav__link {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  padding: 8px 2px;
+  transition: color 0.25s var(--ease-soft);
+}
+
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: 3px;
+  height: 2px;
+  background: var(--toxic);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s var(--ease);
+}
+
+.nav__link:hover,
+.nav__link.is-active {
+  color: var(--fg);
+}
+
+.nav__link:hover::after,
+.nav__link.is-active::after {
+  transform: scaleX(1);
+}
+
+/* Hamburger */
+.nav__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.nav__toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--fg);
+  border-radius: 2px;
+  transition: transform 0.35s var(--ease), opacity 0.25s;
+}
+
+.nav__toggle.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav__toggle.is-open span:nth-child(2) {
+  opacity: 0;
+}
+.nav__toggle.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* =============================================================
+   LAYOUT / SECTIONS
+   ============================================================= */
+.main {
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 120px clamp(20px, 5vw, 48px);
+  position: relative;
+}
+
+.section__head {
+  max-width: 640px;
+  text-align: center;
+  margin: 0 auto 56px;
+}
+
+.section__title {
+  font-family: "LEDLight", var(--font-display);
+  font-size: clamp(2.1rem, 6vw, 3.6rem);
+  background: linear-gradient(
+    100deg,
+    #e2528f 0%,
+    #f4a300 28%,
+    #b7ff4a 52%,
+    #4fd3c4 74%,
+    #e2528f 100%
+  );
+  background-size: 240% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: titleGradient 9s ease-in-out infinite;
+}
+
+@keyframes titleGradient {
+  0%,
+  100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.section__lead {
+  color: var(--fg-muted);
+  margin-top: 14px;
+  font-size: 1.05rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-kicker);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+  transform: rotate(-1.5deg);
+}
+
+/* Poster-card helper — flat, opaque, hard-edged, torn-paper feel.
+   No blur, no translucency: this is paper, not glass. */
+.glass {
+  position: relative;
+  background: var(--bg-soft);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  border: 2px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: 9px 9px 0 rgba(0, 0, 0, 0.65);
+  transform: rotate(-0.4deg);
+}
+
+/* Scroll reveal base state */
+.reveal {
+  opacity: 0;
+  transform: translateY(38px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =============================================================
+   BUTTONS
+   ============================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 15px 30px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transform: rotate(-1deg);
+  transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease),
+    background 0.3s;
+}
+
+.btn--primary {
+  background: var(--toxic);
+  color: #0c0e0c;
+  border: 2px solid var(--fg);
+  box-shadow: 5px 5px 0 var(--fg);
+}
+
+.btn--primary:hover {
+  transform: rotate(0deg) translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--fg);
+}
+
+.btn--primary:active {
+  transform: rotate(0deg) translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--fg);
+}
+
+/* =============================================================
+   HERO
+   ============================================================= */
+.hero {
+  text-align: center;
+}
+
+.hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+.hero__logo {
+  width: min(560px, 90vw);
+  height: auto;
+}
+
+.hero__subtitle {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  letter-spacing: 0.14em;
+}
+
+.hero__scroll {
+  position: absolute;
+  bottom: 38px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 44px;
+  border: 2px solid var(--fg-faint);
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.hero__scroll-dot {
+  width: 4px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--fg);
+  animation: scrollDot 1.8s var(--ease) infinite;
+}
+
+@keyframes scrollDot {
+  0% { opacity: 0; transform: translateY(0); }
+  40% { opacity: 1; }
+  80% { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 0; }
+}
+
+/* =============================================================
+   VIDEO / PERFORMANCE SECTIONS
+   ============================================================= */
+.performance__inner {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* Artwork mark anchored to the bottom-right as an accent so the
+   wordmark typeface stays untouched (e.g. Cats! cat, Villainessica sigil) */
+.performance__accent {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: clamp(72px, 12vw, 130px);
+  height: auto;
+  opacity: 0.9;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
+}
+
+/* Black artwork (e.g. Cats! cat) flipped white for the dark theme */
+.performance__accent--invert {
+  filter: invert(1) drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
+}
+
+.performance__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.performance__band {
+  font-size: clamp(1.9rem, 5vw, 3rem);
+}
+
+/* Each band's own identity logo, shown in its own typeface */
+.performance__logo {
+  height: clamp(48px, 9vw, 104px);
+  width: auto;
+  max-width: min(440px, 92vw);
+  object-fit: contain;
+  object-position: left center;
+  display: block;
+}
+
+/* Artwork supplied as black (e.g. Cats!) — flip it white for the
+   dark theme so it reads on the background. */
+.performance__logo--invert {
+  filter: invert(1);
+}
+
+.performance__sub {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  width: 100%;
+}
+
+.performance__song {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--gold);
+}
+
+.performance__date {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--fg-faint);
+  letter-spacing: 0.02em;
+}
+
+.performance__desc {
+  color: var(--fg-muted);
+  max-width: 620px;
+  margin-top: 22px;
+  font-size: 1.02rem;
+}
+
+/* 16:9 responsive media frame */
+.media-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-soft);
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Dims the looping preview so the countdown / play button read
+   clearly on top of it. Sits below all real JS-injected content
+   because it's generated content, painted before the DOM children
+   that renderMedia() injects. */
+.media-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 10, 9, 0.55);
+  pointer-events: none;
+}
+
+.media-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Lazy YouTube facade (thumbnail + play button) */
+.yt-facade {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.yt-facade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 18, 18, 0.35);
+  transition: background 0.3s;
+}
+
+.yt-facade:hover::after {
+  background: rgba(18, 18, 18, 0.15);
+}
+
+.yt-facade__play {
+  position: relative;
+  z-index: 1;
+  width: 74px;
+  height: 74px;
+  border-radius: 999px;
+  background: var(--toxic);
+  border: 2px solid var(--fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.7);
+  transition: transform 0.3s var(--ease);
+}
+
+.yt-facade:hover .yt-facade__play {
+  transform: scale(1.08);
+}
+
+.yt-facade__play::before {
+  content: "";
+  border-style: solid;
+  border-width: 12px 0 12px 20px;
+  border-color: transparent transparent transparent #0c0e0c;
+  margin-left: 5px;
+}
+
+/* ---------------------- COUNTDOWN ---------------------- */
+.countdown {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  text-align: center;
+  padding: 20px;
+}
+
+.countdown__label {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.countdown__grid {
+  display: flex;
+  gap: clamp(10px, 3vw, 26px);
+}
+
+.countdown__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 64px;
+  padding: 12px 10px 10px;
+  border: 2px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.countdown__cell:nth-child(even) {
+  transform: rotate(1.2deg);
+}
+
+.countdown__cell:nth-child(odd) {
+  transform: rotate(-1.2deg);
+}
+
+.countdown__time {
+  color: var(--fg-faint);
+  font-weight: 400;
+}
+
+.countdown__num {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 7vw, 3.5rem);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.countdown__unit {
+  margin-top: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+/* =============================================================
+   GALLERY (masonry + lightbox)
+   ============================================================= */
+.gallery {
+  min-height: auto;
+  padding-bottom: 140px;
+}
+
+.masonry {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  columns: 3;
+  column-gap: 16px;
+}
+
+.masonry__item {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  background: var(--bg-soft);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+
+.masonry__item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.masonry__item img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.6s var(--ease), filter 0.6s;
+  filter: grayscale(45%) contrast(1.08);
+}
+
+/* Placeholder tile shown until a real photo is supplied */
+.masonry__item--placeholder {
+  height: var(--ph-h, 220px);
+  background: repeating-linear-gradient(
+    135deg,
+    var(--bg-soft),
+    var(--bg-soft) 12px,
+    rgba(255, 255, 255, 0.03) 12px,
+    rgba(255, 255, 255, 0.03) 24px
+  );
+  border: 1px solid var(--glass-border);
+}
+
+.masonry__item:hover img {
+  transform: scale(1.05);
+  filter: grayscale(0%);
+}
+
+/* Photographer credit — fades in over the photo on hover */
+.masonry__credit {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 14px 12px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  color: var(--fg);
+  background: linear-gradient(to top, rgba(8, 8, 8, 0.85), transparent);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+  pointer-events: none;
+}
+
+.masonry__item:hover .masonry__credit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(6, 7, 6, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s var(--ease-soft), visibility 0.4s;
+}
+
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox__figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 90vw;
+}
+
+.lightbox__img {
+  max-width: 90vw;
+  max-height: 78vh;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+.lightbox__caption {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.lightbox__credit {
+  font-size: 0.92rem;
+  color: var(--fg-muted);
+  letter-spacing: 0.03em;
+}
+
+.lightbox__link {
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--toxic);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.lightbox__link:hover {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+.lightbox__link[hidden] {
+  display: none;
+}
+
+.lightbox__close,
+.lightbox__nav {
+  position: absolute;
+  background: var(--bg-soft);
+  border: 2px solid var(--glass-border);
+  color: var(--fg);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.lightbox__close {
+  top: 24px;
+  right: 24px;
+  width: 46px;
+  height: 46px;
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.lightbox__nav {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  font-size: 2rem;
+}
+
+.lightbox__nav--prev { left: 20px; }
+.lightbox__nav--next { right: 20px; }
+
+.lightbox__close:hover,
+.lightbox__nav:hover {
+  background: var(--toxic);
+  color: #0c0e0c;
+}
+
+/* =============================================================
+   ABOUT
+   ============================================================= */
+.about__inner {
+  max-width: 720px;
+  padding: clamp(28px, 5vw, 56px);
+  text-align: left;
+}
+
+.about__inner p {
+  color: var(--fg-muted);
+  margin-top: 18px;
+  font-size: 1.05rem;
+}
+
+/* =============================================================
+   FOOTER
+   ============================================================= */
+.footer {
+  position: relative;
+  z-index: 1;
+  border-top: 2px solid var(--glass-border);
+  background: rgba(8, 9, 8, 0.9);
+  padding: 56px clamp(20px, 5vw, 48px);
+}
+
+.footer__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  text-align: center;
+}
+
+.footer__logo {
+  height: 34px;
+  opacity: 0.85;
+}
+
+.footer__social {
+  display: flex;
+  gap: 26px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer__social a {
+  font-size: 0.92rem;
+  color: var(--fg-muted);
+  transition: color 0.3s;
+  position: relative;
+}
+
+.footer__social a:hover {
+  color: var(--toxic);
+}
+
+.footer__copy {
+  font-size: 0.82rem;
+  color: var(--fg-faint);
+}
+
+/* =============================================================
+   RESPONSIVE
+   ============================================================= */
+@media (max-width: 860px) {
+  .masonry {
+    columns: 2;
+  }
+}
+
+@media (max-width: 720px) {
+  /* Mobile nav */
+  .nav__toggle {
+    display: flex;
+  }
+
+  .nav__links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(300px, 82vw);
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 40px;
+    background: rgba(10, 12, 10, 0.97);
+    border-left: 2px solid var(--glass-border);
+    transform: translateX(100%);
+    transition: transform 0.45s var(--ease);
+  }
+
+  .nav__links.is-open {
+    transform: translateX(0);
+  }
+
+  .nav__link {
+    font-size: 1.25rem;
+    padding: 12px 18px;
+  }
+
+  .performance__date {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .nav__logo {
+    height: 24px;
+  }
+
+  .performance__logo {
+    height: clamp(44px, 13vw, 70px);
+  }
+}
+
+@media (max-width: 520px) {
+  .masonry {
+    columns: 1;
+  }
+
+  .countdown__cell {
+    min-width: 52px;
+  }
+
+  .lightbox__nav {
+    width: 44px;
+    height: 44px;
+  }
+}
