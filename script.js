@@ -39,7 +39,7 @@ const performances = [
     song: "Engine No 9",
     youtube: "dQw4w9WgXcQ",
     description:
-      "Cats! take the next slot in the set order. Lorem Ipsum.",
+      "Statement from the band: \"Alek can't play drums, Ciaran looks like mclovin, Troy is a loser, and the singer is a chud.\"",
     releaseDate: "2026-08-07",
     bg: "4cats.webp",
   },
@@ -50,7 +50,7 @@ const performances = [
     song: "Bottle It Up",
     youtube: "dQw4w9WgXcQ",
     description:
-      "Redline bring the next performance in the release schedule. Replace with details about this set.",
+      "Redline are a four-piece alt/punk rock band from Galway. They draw inspiration from artists like Fugazi, The replacements and Bad Bunny. This unique blend of sound combines into catchy hooks and riffs to create unforgettable songs.",
     releaseDate: "2026-07-31",
     bg: "2redline.webp",
   },
@@ -58,10 +58,10 @@ const performances = [
   {
     band: "Hell Yeah!",
     logo: "hellyeah.svg",
-    song: "It could be worse",
+    song: "It Could Be Worse",
     youtube: "t9ftGnicdmY",
     description:
-      "Hell Yeah! bring a raw, high-energy set to the middle of the night. Replace with details about this performance.",
+      "Meet Hell Yeah!, the Galway outfit serving up homemade \"sick indie music\" with deeply personal lyrics. Their signature style blends vulnerable songwriting with a casual, unfiltered attitude. Joined by Isaac from Sakura, it all combines to create a massive sound that leaves you saying exactly one thing: \"hell yeah!\"",
     releaseDate: "2026-07-24",
     bg: "3hellyeah.webp",
   },
