@@ -309,10 +309,10 @@ function renderMedia(frame, performance) {
    is only injected once the user clicks play. */
 function renderVideoFacade(frame, performance) {
   const id = performance.youtube;
-  const thumb = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
+  // note: took out thumbnail fetch because its ugly
   frame.innerHTML = `
-    <div class="yt-facade" style="background-image:url('${thumb}')"
+    <div class="yt-facade"
          role="button" tabindex="0" aria-label="Play ${performance.band} - ${performance.song}">
       <span class="yt-facade__play" aria-hidden="true"></span>
     </div>
