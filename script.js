@@ -139,7 +139,7 @@ const galleryImages = [
    these either by index (data-bg="0") or by filename.
    ------------------------------------------------------------- */
 const backgrounds = [
-  "poster.png", // 0 - hero / event poster (visual identity)
+  "poster.webp", // 0 - hero / event poster (visual identity)
   "venue.jpg", // 1 - venue / about
   // Per-band looping previews (animated .webp/.gif) - referenced by
   // filename from each performance's [bg] field above.
