@@ -1,8 +1,8 @@
 /* =============================================================
-   SPLIT THE BILL — SCRIPT
+   SPLIT THE BILL - SCRIPT
    All content lives in the editable arrays below. To add a new
    event/performance, gallery photo, or background image, just
-   edit these arrays — no HTML changes required.
+   edit these arrays - no HTML changes required.
    ============================================================= */
 
 /* -------------------------------------------------------------
@@ -13,7 +13,7 @@
                   countdown is shown instead of the video, and the
                   video appears automatically when it reaches zero.
    - bg:         background for this section, from /assets/images/.
-                 Can be a static jpg/png, OR an animated .webp/.gif —
+                 Can be a static jpg/png, OR an animated .webp/.gif -
                  animated files just loop forever as a background,
                  no player, no controls, nothing else to wire up.
                  The dark gradient over the background layer already
@@ -26,7 +26,7 @@ const performances = [
      // song: "Go Back Again",
      // youtube: "dQw4w9WgXcQ",
      // description:
-       // "Talllon top the bill with a heavy, driving set. Placeholder description — replace with details about this performance.",
+       // "Talllon top the bill with a heavy, driving set. Placeholder description - replace with details about this performance.",
      // releaseDate: "2028-08-21",
      // bg: "1talllon.webp",
    // },
@@ -47,8 +47,8 @@ const performances = [
   {
     band: "Redline",
     logo: "redline.svg",
-    song: "Bottle It Up",
-    youtube: "dQw4w9WgXcQ",
+    song: "Bottle It Up [clip]",
+    youtube: "LRiJrnGsxUM",
     description:
       "Redline are a four-piece alt/punk rock band from Galway. They draw inspiration from artists like Fugazi, The replacements and Bad Bunny. This unique blend of sound combines into catchy hooks and riffs to create unforgettable songs.",
     releaseDate: "2026-07-31",
@@ -133,7 +133,6 @@ const galleryImages = [
   { file: "gallery-7.jpg", photographer: "Dean Naylor", url: "https://instagram.com/deannaylorr" },
   { file: "gallery-8.jpg", photographer: "Ace (@tehya.jpeg)", url: "https://www.instagram.com/tehya.jpeg/" },
 ];
-// hy cats vn tall // rd mnt 
 /* -------------------------------------------------------------
    3. BACKGROUNDS
    Persistent full-screen background slides. Sections reference
@@ -142,8 +141,8 @@ const galleryImages = [
 const backgrounds = [
   "poster.png", // 0 - hero / event poster (visual identity)
   "venue.jpg", // 1 - venue / about
-  // Per-band looping previews (animated .webp/.gif) — referenced by
-  // filename from each performance's `bg` field above.
+  // Per-band looping previews (animated .webp/.gif) - referenced by
+  // filename from each performance's [bg] field above.
   "1talllon.webp",
   "2redline.webp",
   "3hellyeah.webp",
@@ -158,7 +157,7 @@ const IMG_PATH = "assets/images/";
 /* =============================================================
    SCROLL REVEAL OBSERVER
    Declared early so the section builders below can use it.
-   Elements with the `reveal` class fade + slide into view.
+   Elements with the [reveal] class fade + slide into view.
    ============================================================= */
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -209,7 +208,7 @@ const revealObserver = new IntersectionObserver(
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  // Mobile hamburger toggle.
+  // Mobile hamburger toggle. (mmmmmm hamburger)
   toggle.addEventListener("click", () => {
     const open = links.classList.toggle("is-open");
     toggle.classList.toggle("is-open", open);
@@ -291,7 +290,7 @@ const revealObserver = new IntersectionObserver(
 /* Render either a countdown or a lazy YouTube facade in a frame. */
 function renderMedia(frame, performance) {
   // The band's own looping preview (static jpg/png or animated
-  // webp/gif — animated ones just loop forever as a CSS background,
+  // webp/gif - animated ones just loop forever as a CSS background,
   // no player needed) sits behind the countdown/facade, dimmed.
   if (performance.bg) {
     frame.style.backgroundImage = `url('${IMG_PATH}${performance.bg}')`;
@@ -314,7 +313,7 @@ function renderVideoFacade(frame, performance) {
 
   frame.innerHTML = `
     <div class="yt-facade" style="background-image:url('${thumb}')"
-         role="button" tabindex="0" aria-label="Play ${performance.band} — ${performance.song}">
+         role="button" tabindex="0" aria-label="Play ${performance.band} - ${performance.song}">
       <span class="yt-facade__play" aria-hidden="true"></span>
     </div>
   `;
@@ -324,7 +323,7 @@ function renderVideoFacade(frame, performance) {
     frame.innerHTML = `
       <iframe
         src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0"
-        title="${performance.band} — ${performance.song}"
+        title="${performance.band} - ${performance.song}"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
         loading="lazy"
@@ -341,7 +340,7 @@ function renderVideoFacade(frame, performance) {
 }
 
 /* Build a live countdown inside a frame. When it hits zero it
-   automatically swaps itself for the video — no code change needed. */
+   automatically swaps itself for the video - no code change needed. */
 function renderCountdown(frame, performance, release) {
   frame.innerHTML = `
     <div class="countdown">
@@ -364,14 +363,14 @@ function renderCountdown(frame, performance, release) {
   };
 
   // Only surface the "drops 5pm" time once it's actually the drop
-  // day — otherwise it's just noise this many days out.
+  // day - otherwise it's just noise this many days out.
   els.time.hidden = !isDropDay(performance.releaseDate);
 
   const tick = () => {
     const diff = release - Date.now();
 
     if (diff <= 0) {
-      // Time's up — replace the countdown with the video.
+      // Time's up - replace the countdown with the video.
       window.clearInterval(timer);
       renderVideoFacade(frame, performance);
       return;
@@ -411,7 +410,7 @@ function countdownCell(key, unit) {
     item.className = "masonry__item";
     item.dataset.index = String(i);
     const credit = photo.photographer
-      ? ` — photo by ${photo.photographer}`
+      ? ` - photo by ${photo.photographer}`
       : "";
     item.innerHTML = `
       <img src="${IMG_PATH}${photo.file}" alt="Split The Bill photo ${i + 1}${credit}"
@@ -491,7 +490,7 @@ function updateLightbox() {
 
   img.src = IMG_PATH + photo.file;
   img.alt = photo.photographer
-    ? `Split The Bill photo ${lightboxIndex + 1} — photo by ${photo.photographer}`
+    ? `Split The Bill photo ${lightboxIndex + 1} - photo by ${photo.photographer}`
     : `Split The Bill photo ${lightboxIndex + 1}`;
 
   // Photographer credit.
@@ -510,7 +509,7 @@ function updateLightbox() {
 }
 
 /* =============================================================
-   SCROLL REVEAL — observe all reveal elements once the DOM
+   SCROLL REVEAL - observe all reveal elements once the DOM
    (including injected sections) is built.
    ============================================================= */
 window.requestAnimationFrame(() => {
@@ -518,7 +517,7 @@ window.requestAnimationFrame(() => {
 });
 
 /* =============================================================
-   DYNAMIC BACKGROUND — crossfade tied to visible section
+   DYNAMIC BACKGROUND - crossfade tied to visible section
    ============================================================= */
 (function initBackground() {
   const stack = document.getElementById("bgStack");
