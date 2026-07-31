@@ -48,7 +48,7 @@ const performances = [
     band: "Redline",
     logo: "redline.svg",
     song: "Bottle It Up [clip]",
-    youtube: "LRiJrnGsxUM",
+    youtube: "DrY_-tmnmqk",
     description:
       "Redline are a four-piece alt/punk rock band from Galway. They draw inspiration from artists like Fugazi, The replacements and Bad Bunny. This unique blend of sound combines into catchy hooks and riffs to create unforgettable songs.",
     releaseDate: "2026-07-31",
