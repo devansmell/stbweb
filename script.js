@@ -37,7 +37,7 @@ const performances = [
     invert: true, 
     accent: "cats-cat.svg", 
     song: "Engine No 9",
-    youtube: "dQw4w9WgXcQ",
+    youtube: "r3xoTg2ZMf8",
     description:
       "Statement from the band: \"Alek can't play drums, Ciaran looks like mclovin, Troy is a loser, and the singer is a chud.\"",
     releaseDate: "2026-08-07",
